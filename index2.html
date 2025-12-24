@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>For You — Christmas & New Year</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+    font-family:'Poppins',sans-serif;
+    height:100vh;
+    background:linear-gradient(180deg,#0f2027,#203a43,#2c5364);
+    color:#fff;
+    overflow:hidden;
+}
+
+/* ===== PAGE SYSTEM ===== */
+.page{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .8s ease;
+}
+.page.active{
+    opacity:1;
+    pointer-events:auto;
+}
+
+.card{
+    width:90%;
+    max-width:720px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(10px);
+    border-radius:24px;
+    padding:50px 40px;
+    text-align:center;
+    animation:fadeUp 1s ease;
+}
+
+h1{
+    font-family:'Playfair Display',serif;
+    font-size:40px;
+    margin-bottom:15px;
+}
+h2{font-weight:400;margin-bottom:20px}
+p{line-height:1.8;font-size:16px;opacity:.9}
+
+@keyframes fadeUp{
+    from{opacity:0;transform:translateY(25px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+/* ===== BUTTON ===== */
+.btn{
+    margin-top:30px;
+    padding:12px 30px;
+    border-radius:30px;
+    border:none;
+    background:#fff;
+    color:#203a43;
+    cursor:pointer;
+    transition:.3s;
+}
+.btn:hover{transform:scale(1.05)}
+.btn.back{
+    background:transparent;
+    color:#fff;
+    border:1px solid rgba(255,255,255,.5);
+    margin-right:10px;
+}
+.nav{margin-top:30px}
+
+/* ===== REALISTIC ENVELOPE ===== */
+/* ===== REALISTIC ENVELOPE (FIXED) ===== */
+.envelope-wrapper{
+    width:280px;
+    height:180px;
+    margin:0 auto 35px;
+    perspective:1200px;
+}
+
+.envelope-body{
+    position:relative;
+    width:100%;
+    height:100%;
+    background:linear-gradient(145deg,#e6d3b3,#d2b48c);
+    border-radius:14px;
+    border:2px solid rgba(0,0,0,.25);
+    box-shadow:
+        0 20px 35px rgba(0,0,0,.35),
+        inset 0 3px 4px rgba(255,255,255,.4);
+    overflow:hidden;
+}
+
+/* flap atas */
+.envelope-flap{
+    position:absolute;
+    top:0;
+    width:100%;
+    height:55%;
+    background:linear-gradient(145deg,#f1e4cc,#d8c2a1);
+    clip-path:polygon(0 0,50% 100%,100% 0);
+    transform-origin:top;
+    transition:transform 1.2s ease;
+    z-index:6;
+    border-bottom:2px solid rgba(0,0,0,.15);
+}
+
+/* surat */
+.envelope-letter{
+    position:absolute;
+    bottom:-120%;
+    left:50%;
+    transform:translateX(-50%);
+    width:85%;
+    height:135%;
+    background:#fffaf2;
+    border-radius:8px;
+    box-shadow:0 12px 25px rgba(0,0,0,.45);
+    transition:bottom 1.2s ease;
+    z-index:5;
+}
+
+/* bagian depan amplop */
+.envelope-front{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(145deg,#ead7b7,#cfae7d);
+    clip-path:polygon(0 100%,50% 42%,100% 100%);
+    z-index:7;
+    border-top:2px solid rgba(0,0,0,.15);
+}
+
+.envelope-wrapper.open .envelope-flap{
+    transform:rotateX(180deg);
+}
+
+.envelope-wrapper.open .envelope-letter{
+    bottom:8%;
+}
+
+/* ===== SLIDER ===== */
+.slider{
+    width:100%;
+    max-width:600px;
+    margin:25px auto;
+    overflow:hidden;
+    border-radius:18px;
+}
+.slides{
+    display:flex;
+    transition:transform .5s ease;
+}
+.slides img{
+    width:100%;
+    flex-shrink:0;
+    height:300px;
+    object-fit:cover;
+    border-radius:18px;
+}
+.slider{
+    cursor: grab;
+}
+.slider:active{
+    cursor: grabbing;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+<div class="card">
+    <div class="envelope-wrapper" id="envelope">
+        <div class="envelope-body">
+            <div class="envelope-flap"></div>
+            <div class="envelope-letter"></div>
+            <div class="envelope-front"></div>
+        </div>
+    </div>
+    <h1>For You</h1>
+    <h2>Christmas & New Year</h2>
+    <h3>Erinne Christy Wibowo</h3>
+    <button class="btn" onclick="openLetter()">Buka Surat</button>
+</div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+<div class="card">
+    <h1>Merry Christmas</h1>
+    <p>
+        Jadi ini adalah proyek yang aku maksudkan untukmu
+        Aku buat ini sebagai hadiah kecil dari aku untuk merayakan Natal dan Tahun Baru
+        Aku minta maaf buat keputusan ortuku, aku mohon maaf
+    </p>
+    <div class="nav">
+        <button class="btn back" onclick="prevPage()">Kembali</button>
+        <button class="btn" onclick="nextPage()">Lanjut</button>
+    </div>
+</div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+<div class="card">
+    <h1>Our Memories</h1>
+    <p>Beberapa potongan kecil dari cerita yang kita lalui.</p>
+
+    <div class="slider">
+        <div class="slides" id="slides">
+            <img src="1.jpeg">
+            <img src="2.jpeg">
+            <img src="5.jpeg">
+            <img src="6.jpeg">
+        </div>
+    </div>
+
+    <div class="nav">
+        <button class="btn back" onclick="prevPage()">Kembali</button>
+        <button class="btn" onclick="nextPage()">Lanjut</button>
+    </div>
+</div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="page4">
+<div class="card">
+    <h1>Harapan 2026</h1>
+    <p>
+        Semoga 2026 membawa lebih banyak kebahagiaan,  
+        kesehatan yang baik, dan mimpi-mimpi yang perlahan menjadi nyata.  
+        Apa pun yang terjadi nanti, aku bakal tetap mengusahakan hubungan kita.
+    </p>
+    <p style="margin-top:15px;">— With all my heart</p>
+    <div class="nav">
+        <button class="btn back" onclick="prevPage()">Kembali</button>
+    </div>
+</div>
+</div>
+
+<script>
+let current=1;
+
+/* PAGE CONTROL */
+function showPage(p){
+    document.getElementById("page"+current).classList.remove("active");
+    current=p;
+    document.getElementById("page"+current).classList.add("active");
+}
+function nextPage(){if(current<4)showPage(current+1)}
+function prevPage(){if(current>1)showPage(current-1)}
+
+/* ENVELOPE */
+function openLetter(){
+    document.getElementById("envelope").classList.add("open");
+    setTimeout(()=>showPage(2),1200);
+}
+
+/* SLIDER */
+let index=0;
+const slides=document.getElementById("slides");
+let startX=0;
+
+slides.addEventListener("touchstart",e=>{
+    startX=e.touches[0].clientX;
+});
+slides.addEventListener("touchend",e=>{
+    let endX=e.changedTouches[0].clientX;
+    if(startX-endX>50)move(1);
+    if(endX-startX>50)move(-1);
+});
+function move(step){
+    const total=slides.children.length;
+    index=Math.max(0,Math.min(index+step,total-1));
+    slides.style.transform=`translateX(-${index*100}%)`;
+}
+</script>
+
+<script>
+let isDragging = false;
+let startXDesktop = 0;
+
+/* DESKTOP DRAG */
+slides.addEventListener("mousedown", e => {
+    isDragging = true;
+    startXDesktop = e.clientX;
+});
+
+slides.addEventListener("mousemove", e => {
+    if(!isDragging) return;
+});
+
+slides.addEventListener("mouseup", e => {
+    if(!isDragging) return;
+    isDragging = false;
+    let endX = e.clientX;
+
+    if(startXDesktop - endX > 80) move(1);
+    if(endX - startXDesktop > 80) move(-1);
+});
+
+slides.addEventListener("mouseleave", () => {
+    isDragging = false;
+});
+</script>
+
+</body>
+</html>
